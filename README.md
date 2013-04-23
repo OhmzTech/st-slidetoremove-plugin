@@ -15,3 +15,18 @@ Usage Notes:<br/>
 4. Easily change the button configuration manually in this plugin for advanced customization.<br/>
 5. By default the handler for the button will remove the record from the store.<br/>
 6. The closeDeletes method will close all open delete buttons.
+
+Usage Example:<br/>
+<pre>
+Ext.create('Ext.List', {
+    store: 'Bookmarks',
+    plugins: {
+        xclass: 'Ext.plugin.SlideToRemove',
+        buttonWidth: '40%',
+        removeText: 'Remove'
+    },
+    itemTpl: new Ext.XTemplate(
+        '<b>{Title}</b>'
+    )
+});
+</pre>
