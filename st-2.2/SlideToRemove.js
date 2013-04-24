@@ -26,13 +26,14 @@ Ext.define('Ext.plugin.SlideToRemove', {
     },
 
     showDelete: function(view, index, target, rec, e) {
-        var element = (!target.dom ? target.innerElement : target);                
+        var element = (!target.dom ? target.innerElement : target);       
         if (e.direction == 'left' && element.down('.x-list-item-remove') === null) {
+            Ext.DomHelper.append(element,'<div class="x-list-delete-comp"></div>');
             var button = this.createButton(element,rec);
             button.show({
                 type: 'slide',
                 duration: 500                            
-            });
+            });      
         } else if (e.direction == 'right' && element.down('.x-list-item-remove')) {
             this.hideDelete(element.down('.x-list-item-remove'));
         }
@@ -45,7 +46,9 @@ Ext.define('Ext.plugin.SlideToRemove', {
             autoClear: false,
             direction: 'right',
             after: function(el) {
-                el.destroy();
+            	var parentEl = el.up('.x-list-delete-comp');
+                Ext.getCmp(el.getId()).destroy();
+                parentEl.destroy();
             }
         });
     },
@@ -58,12 +61,9 @@ Ext.define('Ext.plugin.SlideToRemove', {
     },
     
     checkDeletes: function(view,index,target,rec,e) {
-        if(e.target.getAttribute('class') && e.target.getAttribute('class').indexOf('button') > -1) {
+        if(Ext.get(e.target).hasCls('x-button')) {
             view.suspendEvents();
-        } else {
-        	Ext.DomHelper.append(e.target,'<div class="x-list-delete-comp"></div>');
-        }
-        
+        } 
     },
     
     createButton: function(element,record) {
@@ -77,17 +77,21 @@ Ext.define('Ext.plugin.SlideToRemove', {
                 bottom: ((element.getHeight() - parseInt(element.getStyle('min-height'))) / 2),
                 right: 0,
                 hidden: true,
+                style: {
+                	'z-index': 25,
+                	'-webkit-box-shadow': '-15px 0px 15px -2px white'
+                },
                 showAnimation: {
                     type: 'slide',
                     duration: 500
                 },
                 renderTo: element.down('.x-list-delete-comp'),
                 handler: function(btn,e) {
-                	e.preventDefault();e.stopPropagation();
+                    e.preventDefault();e.stopPropagation();
                     this.getList().getStore().remove(record);
                     Ext.Function.createDelayed(function(){
                         this.getList().resumeEvents(false);
-                        this.getList().element.redraw();//this.getList().refresh();
+                        this.getList().element.refresh();
                     },350,this)();
                 },
                 scope: this
