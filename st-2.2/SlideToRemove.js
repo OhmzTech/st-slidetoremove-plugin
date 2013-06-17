@@ -91,7 +91,7 @@ Ext.define('Ext.plugin.SlideToRemove', {
                     this.getList().getStore().remove(record);
                     Ext.Function.createDelayed(function(){
                         this.getList().resumeEvents(false);
-                        this.getList().element.refresh();
+                        btn.hide();
                     },350,this)();
                 },
                 scope: this
