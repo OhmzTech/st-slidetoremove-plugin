@@ -86,7 +86,7 @@ Ext.define('Ext.plugin.SlideToRemove', {
                     if (this.getHandler() == null) {
                         this.getList().getStore().remove(record);
                     } else {
-                        this.getHandler().call();
+                        this.getHandler().call(listElement, element, record, btn);
                     }
                     Ext.Function.createDelayed(function(){
                         this.getList().resumeEvents(false);
