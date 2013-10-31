@@ -11,6 +11,7 @@ Ext.define('Ext.plugin.SlideToRemove', {
 
     config: {
         list: null,
+        handler: null,
         removeText: 'Delete',
         buttonWidth: '25%'
     },
@@ -82,7 +83,11 @@ Ext.define('Ext.plugin.SlideToRemove', {
                 },
                 renderTo: element.down('.x-list-delete-comp'),
                 handler: function(btn) {
-                    this.getList().getStore().remove(record);
+                    if (this.getHandler() == null) {
+                        this.getList().getStore().remove(record);
+                    } else {
+                        this.getHandler().call();
+                    }
                     Ext.Function.createDelayed(function(){
                         this.getList().resumeEvents(false);
                     },350,this)();
