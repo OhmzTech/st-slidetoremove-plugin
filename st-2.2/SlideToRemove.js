@@ -8,11 +8,13 @@ Author: OhmzTech (www.ohmztech.com)
 Ext.define('Ext.plugin.SlideToRemove', {
     extend: 'Ext.Component',
     alias: 'plugin.slidetoremove',
-
+	requires:'Ext.Anim',
     config: {
         list: null,
         removeText: 'Delete',
-        buttonWidth: '25%'
+        buttonWidth: '25%',
+		btnIcon:'',
+		btnUi:'decline'
     },
     
     init: function(list) {
@@ -68,10 +70,11 @@ Ext.define('Ext.plugin.SlideToRemove', {
     
     createButton: function(element,record) {
             return Ext.create('Ext.Button', {
-                ui: 'decline',
+                ui: this.getBtnUi(),
                 cls: 'x-list-item-remove',
                 text: this.getRemoveText(),
                 height: parseInt(element.getStyle('min-height')) - 8,
+				iconCls:this.getBtnIcon(),
                 margin: 4,
                 width: this.getButtonWidth(),
                 bottom: ((element.getHeight() - parseInt(element.getStyle('min-height'))) / 2),
