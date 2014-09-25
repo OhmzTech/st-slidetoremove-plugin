@@ -1,0 +1,8 @@
+.x-list .x-list-item-remove {
+	margin: 4px;
+	z-index: 25;
+	-webkit-box-shadow: -15px 0px 15px -2px white;
+	&.x-button-plain {
+		color:#FF0000;
+	}
+}

@@ -1,8 +1,9 @@
 /*
 Plugin: Ext.plugin.SlideToRemove
 Version: 1.3.0
-Tested: Sencha Touch 2.2
+Tested: Sencha Touch 2.4
 Author: OhmzTech (www.ohmztech.com)
+Updated: Ashley McKnight
 */
 
 Ext.define('Ext.plugin.SlideToRemove', {
@@ -75,15 +76,10 @@ Ext.define('Ext.plugin.SlideToRemove', {
                 text: this.getRemoveText(),
                 height: parseInt(element.getStyle('min-height')) - 8,
 				iconCls:this.getBtnIcon(),
-                margin: 4,
                 width: this.getButtonWidth(),
                 bottom: ((element.getHeight() - parseInt(element.getStyle('min-height'))) / 2),
                 right: 0,
                 hidden: true,
-                style: {
-                	'z-index': 25,
-                	'-webkit-box-shadow': '-15px 0px 15px -2px white'
-                },
                 showAnimation: {
                     type: 'slide',
                     duration: 500
