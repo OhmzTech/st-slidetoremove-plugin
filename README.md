@@ -18,10 +18,10 @@ Usage Notes:<br/>
 
 <b>2.4 Version - Adds more customization, only tested with Sencha 2.4</b>
 Can specify 
--btnUI
--btnIcon
--hideDeletesOnTap (iOS like list functionality)
--itemTapFn (used in conjuntion with hideDeltesOnTap)
+-btnUI <br/>
+-btnIcon<br/>
+-hideDeletesOnTap (iOS like list functionality)<br/>
+-itemTapFn (used in conjuntion with hideDeltesOnTap)<br/>
 
 Usage Example:<br/>
 <pre>
