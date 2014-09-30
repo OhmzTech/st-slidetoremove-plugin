@@ -1,28 +1,35 @@
 /*
 Plugin: Ext.plugin.SlideToRemove
 Version: 1.3.0
-Tested: Sencha Touch 2.2
+Tested: Sencha Touch 2.4
 Author: OhmzTech (www.ohmztech.com)
+Updated: Ashley McKnight
 */
 
 Ext.define('Ext.plugin.SlideToRemove', {
     extend: 'Ext.Component',
     alias: 'plugin.slidetoremove',
-
+	requires:'Ext.Anim',
     config: {
         list: null,
         removeText: 'Delete',
-        buttonWidth: '25%'
+        buttonWidth: '25%',
+		btnIcon:'',
+		btnUi:'decline',
+		hideDeletesOnTap:false,
+		itemTapFn:''
     },
-    
+    deleteCount:0,
     init: function(list) {
         this.setList(list);
         list.on({
             itemswipe: this.showDelete,
+			itemtap:this.itemTapHandler,
             itemtouchstart: this.checkDeletes, 
             hide: this.closeDeletes,
             scope: this
         });
+		
     },
 
     showDelete: function(view, index, target, rec, e) {
@@ -33,7 +40,8 @@ Ext.define('Ext.plugin.SlideToRemove', {
             button.show({
                 type: 'slide',
                 duration: 500                            
-            });      
+            });
+			this.deleteCount += 1;      
         } else if (e.direction == 'right' && element.down('.x-list-item-remove')) {
             this.hideDelete(element.down('.x-list-item-remove'));
         }
@@ -51,6 +59,7 @@ Ext.define('Ext.plugin.SlideToRemove', {
                 parentEl.destroy();
             }
         });
+		this.deleteCount -= 1;    
     },
 
     closeDeletes: function(view) {
@@ -58,29 +67,26 @@ Ext.define('Ext.plugin.SlideToRemove', {
             node.parentNode.style.removeProperty('-webkit-transform');
             node.parentNode.removeChild(node);
         });
+		this.deleteCount = 0;
+		
     },
     
     checkDeletes: function(view,index,target,rec,e) {
-        if(Ext.get(e.target).hasCls('x-button')) {
+		if(Ext.get(e.target).hasCls('x-button')) {
             view.suspendEvents();
         } 
     },
-    
     createButton: function(element,record) {
             return Ext.create('Ext.Button', {
-                ui: 'decline',
+                ui: this.getBtnUi(),
                 cls: 'x-list-item-remove',
                 text: this.getRemoveText(),
                 height: parseInt(element.getStyle('min-height')) - 8,
-                margin: 4,
+				iconCls:this.getBtnIcon(),
                 width: this.getButtonWidth(),
                 bottom: ((element.getHeight() - parseInt(element.getStyle('min-height'))) / 2),
                 right: 0,
                 hidden: true,
-                style: {
-                	'z-index': 25,
-                	'-webkit-box-shadow': '-15px 0px 15px -2px white'
-                },
                 showAnimation: {
                     type: 'slide',
                     duration: 500
@@ -96,5 +102,18 @@ Ext.define('Ext.plugin.SlideToRemove', {
                 },
                 scope: this
             });       
-    }
+    },
+	itemTapHandler: function(view,index,target,rec,e){
+        if (this.getItemTapFn()) {
+			if ( (this.deleteCount > 0) && this.getHideDeletesOnTap()){
+				this.closeDeletes(view);
+			}
+			else {
+				log("Tap Handler: " + Ext.get(e.target).getId());
+				this.getItemTapFn().call(this, view,index,target,rec,e);
+			}
+        } else {    
+            return;
+        }
+	}
 });
