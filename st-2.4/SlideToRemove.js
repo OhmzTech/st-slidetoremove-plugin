@@ -1,9 +1,8 @@
 /*
 Plugin: Ext.plugin.SlideToRemove
-Version: 1.3.0
+Version: 1.4.0
 Tested: Sencha Touch 2.4
 Author: OhmzTech (www.ohmztech.com)
-Updated: Ashley McKnight
 */
 
 Ext.define('Ext.plugin.SlideToRemove', {
@@ -109,7 +108,7 @@ Ext.define('Ext.plugin.SlideToRemove', {
 				this.closeDeletes(view);
 			}
 			else {
-				log("Tap Handler: " + Ext.get(e.target).getId());
+				//Call itemTapFn
 				this.getItemTapFn().call(this, view,index,target,rec,e);
 			}
         } else {    
