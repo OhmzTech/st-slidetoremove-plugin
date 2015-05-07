@@ -3,9 +3,11 @@ st-slidetoremove-plugin
 
 Slide to Remove Plugin for Sencha Touch Lists
 
-SlideToRemove is a simple plugin for Sencha Touch 2 that adds the ability to swipe list items to remove them upon confirmation, very similiar to the native iOS controls seen on iPhones/iPads.
+SlideToRemove is a simple plugin for Sencha Touch 2 that adds the ability to swipe list items to remove them upon confirmation, very similar to the native iOS controls seen on iPhones/iPads.
 
-*Currently supports Sencha Touch 2.1 & 2.2*<br/>
+There is an experimental next version that supports Sencha Touch 2.4, renamed as ListSwipeAction.js and located in the root directory. This version will be finalized in the near future for the upcoming release of Ext JS 6.
+
+*Currently supports Sencha Touch 2.1, 2.2, 2.4*<br/>
 <b>*Make sure you use the file for the correct version until they can be combined!*</b>
 
 Usage Notes:<br/>
